@@ -1,19 +1,19 @@
 
-# express-group-router
+# express-groups-router
 
 An Express router for creating nested route groups easily.
 
 ## Installation
 
 ```bash
-npm install express-group-router
+npm install express-groups-router
 ```
 
 ## Usage
 
 ```javascript
 const express = require('express');
-const { group, subGroup, group_router } = require('express-group-router');
+const { group, subGroup, group_router } = require('express-groups-router');
 
 const app = express();
 
