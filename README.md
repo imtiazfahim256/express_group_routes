@@ -26,39 +26,35 @@ function exampleMiddleware(req, res, next) {
   next();
 }
 
-// Create a group with a base path
-group('/blogs', (blogs) => {
-  // -> /blogs
-  blogs.get('/', exampleMiddleware, (req, res) => {
-    res.send('Get all blogs');
-  });
-
-  // Create a subgroup with dynamic path
-  subGroup(blogs, (blog) => {
-    // -> /blogs/:blogId
-    blog.get('/:blogId', exampleMiddleware, (req, res) => {
-      const blogId = req.params.blogId;
-      res.send(`Get blog with ID: ${blogId}`);
+group('/admin', (admin) => {
+  //-> /admin/
+    admin.get('/', exampleMiddleware,(req, res) => {
+        res.render('Admin_section/dashboard');
+    });
+  //-> /admin/addexam
+    admin.get('/addexam', (req, res) => {
+        res.render('Admin_section/academic/examadd');
+    });
+    
+    admin.get('/manageexam', (req, res) => {
+        res.render('Admin_section/academic/exammanage');
+    });
+    
+    admin.get('/addteacher', (req, res) => {
+        res.render('Admin_section/academic/addteacher');
+    });
+    
+    admin.get('/managestudent', (req, res) => {
+        res.render('Admin_section/academic/managestudent');
     });
 
-    // -> /blogs/:blogId
-    blog.post('/:blogId', (req, res) => {
-      const blogId = req.params.blogId;
-      res.send(`Create new blog with ID: ${blogId}`);
+    subGroup(admin, '/student', (sub_student) => {
+        // -> /admin/student/:studentId
+        sub_student.get('/:studentId', exampleMiddleware,(req, res) => {
+            const studentId = req.params.studentId;
+            res.send(`Get student with ID: ${studentId}`);
+        });
     });
-
-    // -> /blogs/:blogId/comments
-    blog.get('/:blogId/comments', (req, res) => {
-      const blogId = req.params.blogId;
-      res.send(`Get comments for blog with ID: ${blogId}`);
-    });
-
-    // -> /blogs/:blogId/likes
-    blog.get('/:blogId/likes', (req, res) => {
-      const blogId = req.params.blogId;
-      res.send(`Get likes for blog with ID: ${blogId}`);
-    });
-  });
 });
 
 // Start the Express app
