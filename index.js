@@ -10,13 +10,13 @@ function group(prefix, callback) {
     group_router.use(prefix, nestedRouter);
   }
   
-  // Custom function to create dynamically nested subgroups
-  function subGroup(parentRouter, callback) {
+// Custom function to create dynamically nested subgroups
+  
+  function subGroup(parentRouter, prefix, callback) {
     const nestedRouter = express.Router({ mergeParams: true });
     callback(nestedRouter);
-    parentRouter.use(nestedRouter);
-  }
-
+    parentRouter.use(prefix, nestedRouter);
+}
 
 module.exports = {
     group,
