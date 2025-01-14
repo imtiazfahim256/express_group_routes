@@ -1,32 +1,71 @@
 {
- 
+ 
   "name": "express-group-router",
-  "version": "1.0.3",
+ 
+  "version": "1.0.4",
+ 
   "description": "Express router for nested route groups",
+ 
   "main": "index.js",
+ 
   "devDependencies": {},
+ 
   "scripts": {
-    "test": "node index.js"
+ 
+   
+  "test": "node index.js"
+ 
   },
+ 
   "dependencies": {
-    "express": "^4.18.2"
+ 
+   
+  "express": "^4.18.2"
+ 
   },
+ 
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/imtiazfahim256/express_group_routes.git"
+ 
+   
+  "type": "git",
+ 
+   
+  "url": "git+https://github.com/imtiazfahim256/express_group_routes.git"
+ 
   },
+ 
   "keywords": [
-    "express",
-    "express routes",
-    "router",
-    "route",
-    "group",
-    "express group router"
+ 
+   
+  "express",
+ 
+   
+  "express routes",
+ 
+   
+  "router",
+ 
+   
+  "route",
+ 
+   
+  "group",
+ 
+   
+  "express group router"
+ 
   ],
+ 
   "author": "imtiaz fahim",
+ 
   "license": "MIT",
+ 
   "bugs": {
-    "url": "https://github.com/imtiazfahim256/express_group_routes/issues"
+ 
+   
+  "url": "https://github.com/imtiazfahim256/express_group_routes/issues"
+ 
   },
+ 
   "homepage": "https://github.com/imtiazfahim256/express_group_routes#readme"
 }
