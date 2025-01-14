@@ -18,7 +18,7 @@ Clone or download this repository, and include the file in your project. No exte
 ### Import the Module
 
 ```javascript
-const { group, subGroup, group_router } = require('./path-to-your-file');
+const { group, subGroup, group_router } = require('express-group-router');
 
 ## Example Routes
 
