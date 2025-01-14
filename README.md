@@ -1,65 +1,63 @@
 
-# express-groups-router
+# Express Nested Group Router with Middleware Support
 
-An Express router for creating nested route groups easily.
+This module provides a custom implementation of nested route groups for Express.js, inspired by Laravel's routing functionality. It supports adding middleware to route groups or sub-groups to simplify and organize route management.
+
+## Features
+
+- **Nested Route Groups**: Group related routes together for better organization.
+- **Middleware Support**: Apply middleware to entire groups or sub-groups.
+- **Flexible Sub-Groups**: Dynamically nest sub-groups within groups.
 
 ## Installation
 
-```bash
-npm install express-groups-router
-```
+Clone or download this repository, and include the file in your project. No external dependencies are required apart from `express`.
 
 ## Usage
 
-```javascript
-const express = require('express');
-const { group, subGroup, group_router } = require('express-groups-router');
+### Import the Module
 
+```javascript
+const { group, subGroup, group_router } = require('./path-to-your-file');
+
+## Example Routes
+
+
+
+const express = require('express');
 const app = express();
 
-// Use the group_router in your main Express app
+// Import controllers and middleware
+const Air_ticket = require('./controllers/Air_ticket');
+const Role_Permission = require('./middleware/Role_Permission');
+
+// Define route groups
+group('/air-ticket', (Air_Ticket) => {
+    subGroup(Air_Ticket, '/get/airport', (sub) => {
+        sub.put('/', Role_Permission.Check_permission(['MANAGE_ROLES']), Air_ticket.get_airport);
+    });
+
+    subGroup(Air_Ticket, '/get/airline', (sub) => {
+        sub.put('/', Air_ticket.get_airlines);
+    });
+
+    subGroup(Air_Ticket, '/search/ticket', (sub) => {
+        sub.post('/', Air_ticket.search_ticket_post);
+        sub.post('/flex', Air_ticket.flexpost);
+        sub.post('/fareRules', Air_ticket.fareRulesPost);
+        sub.post('/filters', Air_ticket.search_filter_post);
+        sub.get('/status/:requestId', Air_ticket.check_request_progress);
+    });
+}, [Role_Permission.Check_permission(['MANAGE_AIR_TICKETS'])]);
+
+// Use the router in your app
 app.use(group_router);
 
-// Example middleware
-function exampleMiddleware(req, res, next) {
-  console.log('Middleware executed');
-  next();
-}
-
-group('/admin', (admin) => {
-  //-> /admin/
-    admin.get('/', exampleMiddleware,(req, res) => {
-        res.render('Admin_section/dashboard');
-    });
-  //-> /admin/addexam
-    admin.get('/addexam', (req, res) => {
-        res.render('Admin_section/academic/examadd');
-    });
-    
-    admin.get('/manageexam', (req, res) => {
-        res.render('Admin_section/academic/exammanage');
-    });
-    
-    admin.get('/addteacher', (req, res) => {
-        res.render('Admin_section/academic/addteacher');
-    });
-    
-    admin.get('/managestudent', (req, res) => {
-        res.render('Admin_section/academic/managestudent');
-    });
-
-    subGroup(admin, '/student', (sub_student) => {
-        // -> /admin/student/:studentId
-        sub_student.get('/:studentId', exampleMiddleware,(req, res) => {
-            const studentId = req.params.studentId;
-            res.send(`Get student with ID: ${studentId}`);
-        });
-    });
+// Start the server
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
 
-// Start the Express app
-app.listen(3939, () => {
-  console.log('Example app listening on port 3939!');
-});
 ```
 
