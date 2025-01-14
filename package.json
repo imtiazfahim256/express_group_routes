@@ -1,7 +1,7 @@
 {
  
   "name": "express-group-router",
-  "version": "3.0",
+  "version": "1.0.2",
   "description": "Express router for nested route groups",
   "main": "index.js",
   "devDependencies": {},
