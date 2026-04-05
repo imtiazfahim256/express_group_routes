@@ -4,12 +4,17 @@ const group_router = express.Router();
 
 const namedRoutes = {};
 // Custom function to create nested route groups with middleware support
-function group(prefix, callback, middleware = [],name = null) {
+function group(prefix, callback, middleware = [], name = null) {
   const nestedRouter = express.Router();
-  // Apply middleware if provided
-  if (Array.isArray(middleware) && middleware.length > 0) {
-    nestedRouter.use(middleware);
+  
+  // Normalize middleware to an array
+  const middlewares = Array.isArray(middleware) ? middleware : (middleware ? [middleware] : []);
+
+  // Apply middleware if provided using spread syntax
+  if (middlewares.length > 0) {
+    nestedRouter.use(...middlewares);
   }
+  
   callback(nestedRouter);
 
   namedRoutes[name || prefix] = prefix;
@@ -17,12 +22,17 @@ function group(prefix, callback, middleware = [],name = null) {
 }
 
 // Custom function to create dynamically nested subgroups with middleware support
-function subGroup(parentRouter, prefix, callback, middleware = [],name = null) {
+function subGroup(parentRouter, prefix, callback, middleware = [], name = null) {
   const nestedRouter = express.Router({ mergeParams: true });
-  // Apply middleware if provided
-  if (Array.isArray(middleware) && middleware.length > 0) {
-    nestedRouter.use(middleware);
+  
+  // Normalize middleware to an array
+  const middlewares = Array.isArray(middleware) ? middleware : (middleware ? [middleware] : []);
+
+  // Apply middleware if provided using spread syntax
+  if (middlewares.length > 0) {
+    nestedRouter.use(...middlewares);
   }
+  
   callback(nestedRouter);
   namedRoutes[name || prefix] = prefix;
   parentRouter.use(prefix, nestedRouter);

@@ -6,7 +6,8 @@ This module provides a custom implementation of nested route groups for Express.
 
 - **Named Routes**: Assign names to routes for easy reference.
 - **Nested Route Groups**: Group related routes together for better organization.
-- **Middleware Support**: Apply middleware to entire groups or sub-groups.
+- **Middleware Support**: Apply middleware (single function or an array of functions) to entire groups or sub-groups.
+- **Cross-Platform Compatible**: Fully compatible with Linux, cPanel, and Windows environments securely.
 - **Flexible Sub-Groups**: Dynamically nest sub-groups within groups.
 
 ## Installation
@@ -70,15 +71,16 @@ app.listen(PORT, () => {
 
 - **prefix**: The base URL prefix for the group (e.g., `/air-ticket`).
 - **callback**: A function defining the routes inside the group.
-- **middleware**: (Optional) Array of middleware to apply to the group.
-- **name**: (Optional) A name for the group, useful for named routes.
+- **middleware**: (Optional) A single middleware function or an array of middleware functions.
+- **name**: (Optional) A name for the group, useful for named routes. 
+  *(Note: If you want to pass a `name` but no `middleware`, you must explicitly pass `[]` or `null` for the middleware parameter: `group('/route', cb, [], 'my-route')`)*
 
 #### `subGroup(parentRouter, prefix, callback, middleware = [], name = null)`
 
 - **parentRouter**: The router to nest the subgroup under.
 - **prefix**: The base URL prefix for the subgroup (e.g., `/get/airport`).
 - **callback**: A function defining the routes inside the subgroup.
-- **middleware**: (Optional) Array of middleware to apply to the subgroup.
+- **middleware**: (Optional) A single middleware function or an array of middleware functions.
 - **name**: (Optional) A name for the subgroup, useful for named routes.
 
 #### `route_name(name)`
